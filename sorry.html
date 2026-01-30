@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>向你道歉💌</title>
+<style>
+    body {
+        background: #fff0f5;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        flex-direction: column;
+    }
+    #message {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        min-height: 2em;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        background-color: #ff69b4;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background-color: #ff1493;
+    }
+</style>
+</head>
+<body>
+
+<div id="message"></div>
+<button id="replyBtn" style="display:none;">給她回應</button>
+
+<script>
+const messages = [
+    "嗨～我有件很重要的事想跟你說...",
+    "我真的很對不起💔",
+    "希望你能給我一個機會彌補🙏"
+];
+
+let i = 0;
+const messageDiv = document.getElementById("message");
+const replyBtn = document.getElementById("replyBtn");
+
+function typeWriter(text, index = 0, callback) {
+    if(index < text.length) {
+        messageDiv.innerHTML += text.charAt(index);
+        setTimeout(() => typeWriter(text, index + 1, callback), 50);
+    } else {
+        if(callback) callback();
+    }
+}
+
+function showMessages() {
+    if(i < messages.length) {
+        typeWriter(messages[i], 0, () => {
+            messageDiv.innerHTML += "<br>";
+            i++;
+            setTimeout(showMessages, 500);
+        });
+    } else {
+        replyBtn.style.display = "inline-block";
+    }
+}
+
+replyBtn.addEventListener("click", () => {
+    let answer = prompt("你願意原諒我嗎？(是/否)");
+    if(answer === "是") {
+        messageDiv.innerHTML += "<br>太好了！我會好好珍惜你💕";
+    } else {
+        messageDiv.innerHTML += "<br>我明白…我會努力讓你看到我的誠意😢";
+    }
+    replyBtn.style.display = "none";
+});
+
+// 開始動畫
+showMessages();
+</script>
+
+</body>
+</html>
